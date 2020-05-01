@@ -1,14 +1,22 @@
-# super-check
--------------
 
-Super check, make your code more interesting and easier。
-偶是中国人，不说鸟话！
+#define RAW     0
+#define ASSERT  1
+#define ERROR   2
+#define WARN    3         
+#define INFO    4         
+#define DEBUG   5    
 
-见过很多类似的写法，就连鼎鼎大名的GLib对此的实现，都很渣。do_val_if_fail(xxxx); 看似一眼知其意，但是非常苦涩，扩展性不好，而且很长，一行80个字符很容易就超了，实际使用时体验非常糟糕。
+#define TRUE	1
+#define FALSE	0
 
-以下是我的实现版本：
+/*!
+ *	key API for user
+ *	eg: LOG(INFO, "xxx %d\n", dat);
+ *		LOG(ERROR, "xxx",xxx,x,x,x,x);
+ */
+#undef  LOG /* ignore compile warnning */
+#define LOG(lvl, ...)   if(lvl < INFO) {printf("[%s:%d]", __FUNCTION__, __LINE__);printf(__VA_ARGS__);} 
 
-```c
  /*!
   *  Super Check
   *  LOG   中带行号，文件名；
@@ -29,9 +37,6 @@ Super check, make your code more interesting and easier。
                 __VA_ARGS__;                                \
             }                                               \
         }while(0);
-// 总的思想就是： 如果 表达式 exp ！= 期望值 tar， 执行 expr 
-// if (exp != tar)  expr
-// 往往用户函数返回值校验，参数校验！
-```
 
-可以使用demo体验以下，见utils测试代码。
+
+#define DO_NOTHING ;            /* 无操作 */
