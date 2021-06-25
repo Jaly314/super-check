@@ -18,20 +18,17 @@ Super check, make your code more interesting and easier。
   *  ...   扩充表达式，可有可无
   */
 #undef CHECK
-#define CHECK(exp, tar, expr, ...)                         \
-        do                                                  \
+#define CHECK(exp, tar, expr, ...)                          \
         {                                                   \
-            unsigned int _ret = (unsigned int)(exp);		\
-            if(_ret != (unsigned int)(tar))					\
+            unsigned int _ret = (unsigned int)(exp);	      	\
+            if(_ret != (unsigned int)(tar))			            		\
             {                                               \
                 LOG(ERROR, "[%s] (%u) != (%u) cause err \n", #exp, _ret, (unsigned int)tar);  \
                 expr;                                       \
                 __VA_ARGS__;                                \
             }                                               \
-        }while(0);
-// 总的思想就是： 如果 表达式 exp ！= 期望值 tar， 执行 expr 
-// if (exp != tar)  expr
-// 往往用户函数返回值校验，参数校验！
+        }
+
 ```
 
 可以使用demo体验以下，见utils测试代码。
