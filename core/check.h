@@ -26,17 +26,16 @@
   *  ...   扩充表达式，可有可无
   */
 #undef CHECK
-#define CHECK(exp, tar, expr, ...)                         \
-        do                                                  \
+#define CHECK(exp, tar, expr, ...)                          \
         {                                                   \
-            unsigned int _ret = (unsigned int)(exp);		\
-            if(_ret != (unsigned int)(tar))					\
+            unsigned int _ret = (unsigned int)(exp);	      	\
+            if(_ret != (unsigned int)(tar))			            		\
             {                                               \
                 LOG(ERROR, "[%s] (%u) != (%u) cause err \n", #exp, _ret, (unsigned int)tar);  \
                 expr;                                       \
                 __VA_ARGS__;                                \
             }                                               \
-        }while(0);
+        }
 
 
 #define DO_NOTHING ;            /* 无操作 */
