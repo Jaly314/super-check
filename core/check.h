@@ -29,7 +29,7 @@
 #define CHECK(exp, tar, expr, ...)                          \
         {                                                   \
             unsigned int _ret = (unsigned int)(exp);	      	\
-            if(_ret != (unsigned int)(tar))			            		\
+            if (unlikely(_ret != (unsigned int)(tar)))    		\
             {                                               \
                 LOG(ERROR, "[%s] (%u) != (%u) cause err \n", #exp, _ret, (unsigned int)tar);  \
                 expr;                                       \
