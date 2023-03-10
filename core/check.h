@@ -25,17 +25,23 @@
   *  expr  处理表达式， 如果只是报错不处理，可以用 DO_NOTHING
   *  ...   扩充表达式，可有可无
   */
+#ifdef CHECK
+#warning "Trust me and remove your own MARK define, or remove this file please right now !"
 #undef CHECK
-#define CHECK(exp, tar, expr, ...)                          \
-        {                                                   \
-            unsigned int _ret = (unsigned int)(exp);	      	\
-            if (unlikely(_ret != (unsigned int)(tar)))    		\
-            {                                               \
-                LOG(ERROR, "[%s] (%u) != (%u) cause err \n", #exp, _ret, (unsigned int)tar);  \
-                expr;                                       \
-                __VA_ARGS__;                                \
-            }                                               \
-        }
+#endif
 
+#define TARGET  ""     /* 每个文件中重新定义一个，作为模块名 */
+#define CHECK(exp, tar, expr, ...)                                                               \
+    {                                                                                            \
+        size_t _ret = (size_t)(exp);                                                             \
+        if (unlikely(_ret != (size_t)(tar))) {                                                   \
+            LOG(ERROR, TARGET " [%s != %s] => 0x%lX != 0x%lX\n", #exp, #tar, _ret, (size_t)tar); \
+            expr;                                                                                \
+            __VA_ARGS__;                                                                         \
+        }                                                                                        \
+    }
+#else
+#define CHECK(...)
+#endif
 
 #define DO_NOTHING ;            /* 无操作 */
